@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<title>Device Ap user createp</title>
+<script>
+function validateForm() {
+  let password = document.forms["userForm"]["password"].value;
+  let confirm_password = document.forms["userForm"]["confirm_password"].value;
+  if (password != confirm_password) {
+  document.getElementById("message").innerHTML = 'Password and confirm password should not match.';
+     return false;
+  }
+  
+  if (/^([a-z0-9]{5,})$/.test(password)){
+    document.getElementById("message").innerHTML = 'Provide strong password should contains numbers and special characters.';
+    return false;
+  }
+}
+</script>
+<body>
+<h2>New User Registration</h2>
+<p id="message"></p>
+<form name="userForm" method="post" action="/users" onsubmit="return validateForm()" >
+  <label for="first_name">First name:</label>
+  <input type="text" id="first_name" name="first_name" required autocomplete="off"><br>
+  <label for="last_name">Last name:</label>
+  <input type="text" id="last_name" name="last_name" require autocomplete="off"d><br>
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required autocomplete="off"><br>
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required></br>
+  <label for="confirm_password">Confirm Password:</label>
+  <input type="password" id="confirm_password" name="confirm_password" required></br>
+  <input type="submit" value="Signup">
+</form>
+<a href="./user/signin">signin</a>
+</body>
+</html
