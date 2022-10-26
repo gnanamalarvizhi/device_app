@@ -9,7 +9,7 @@ function generate() {
 	var uniquechar = "";
 
 	const randomchar =
-"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 	// Generate captcha for length of  5 with random character
 	for (let i = 1; i < 5; i++) {
@@ -22,22 +22,22 @@ function generate() {
 }
 
 function printmsg() {
-  	const usr_input = document
+	const usr_input = document
 		.getElementById("submit").value;
-	
+
 	// Check whether the input is equal
 	// to generated captcha or not
 	if (usr_input == captcha.innerHTML) {
-	
+
 		var s = document.getElementById("key")
 			.innerHTML = "Matched";
-			return true;
+		return true;
 		generate();
 	}
 	else {
 		var s = document.getElementById("key")
 			.innerHTML = "not Matched";
-			return false;
+		return false;
 		generate();
 	}
 }
