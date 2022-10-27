@@ -3,15 +3,19 @@
 <title>Device Ap user createp</title>
 <script>
   function validateForm() {
+    let first_name = document.forms["userForm"]["first_name"].value;
+    let last_name = document.forms["userForm"]["last_name"].value;
     let password = document.forms["userForm"]["password"].value;
     let confirm_password = document.forms["userForm"]["confirm_password"].value;
     if (password != confirm_password) {
       document.getElementById("message").innerHTML = 'Password and confirm password should not match.';
       return false;
-    }
+    } else if (!(/^[A-Za-z]+$/).test(first_name) || !(/^[A-Za-z]+$/).test(last_name)) {
+      document.getElementById("message").innerHTML = 'Name should contain only alphabets.';
+      return false;
 
-    if (/^([a-z0-9]{5,})$/.test(password)) {
-      document.getElementById("message").innerHTML = 'Provide strong password should contains numbers and special characters.';
+    } else if (!(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,10}$/).test(password)) {
+      document.getElementById("message").innerHTML = 'Provide strong password should contains 8 characters numbers and special characters.';
       return false;
     }
   }
