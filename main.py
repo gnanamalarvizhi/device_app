@@ -42,8 +42,8 @@ def create_users(first_name: str = Form(), last_name: str = Form(), email: str =
     return {'message': 'User created successfully.'}
 
 @device_app.post('/shipments')
-def create_shipments(shipment_name: str = Form(),container_no: str = Form(),route_type: str = Form(), delivery_type: str = Form()):
-    Shipment = shipment(shipment_name=shipment_name, shipment_status='created', container_no=container_no, route_type=route_type, delivery_type=delivery_type)
+def create_shipments(shipment_no: int= Form(), container_no: int= Form(), shipment_description: str = Form(), phone_no: str = Form(), delivery_no: int= Form(), ndc_no: int= Form(), batch_id: int= Form(), goods_no: int= Form(), route_details: str = Form(), goods_type: str = Form(), device: str = Form(), date: str = Form()):
+    Shipment = shipment(shipment_no=shipment_no, container_no=container_no, shipment_description=shipment_description, phone_no=phone_no, delivery_no=delivery_no, ndc_no=ndc_no, batch_id=batch_id, goods_no=goods_no, route_details=route_details, goods_type=goods_type, device=device, date=date)
     shipment_data = jsonable_encoder(Shipment)
     db.shipments.insert_one(shipment_data)
     return dashboard(shipment_data )
@@ -54,7 +54,6 @@ def get_all_shipments():
 
 @device_app.post("/signin")
 def check_user_exists(request: Request, email: str = Form(), password: str = Form(),):
-    print(email)
     if(db.users.count_documents({ 'email': email, 'password':password}, limit = 1) != 0):
         return templates.TemplateResponse("dashboard.html", {"request": request, 'shipments': get_all_shipments()})
     return {'message' : 'Incorrect email and password.'}

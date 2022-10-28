@@ -9,22 +9,6 @@
 <body>
   <h2>Shipment Dashboard</h2>
   <a href="./shipment/create">Create Shipment</a>
-  <table>
-    <tr>
-      <th>Shipment Name</th>
-      <th>Container number</th>
-      <th>Delivery Type</th>
-      <th>Route Type</th>
-    </tr>
-    {% for shipment in shipments%}
-    <tr>
-      <td>{{ shipment["shipment_name"]}}</td>
-      <td>{{ shipment["container_no"]}}</td>
-      <td>{{ shipment["delivery_type"]}}</td>
-      <td>{{ shipment["route_type"]}}</td>
-    </tr>
-    {% endfor %}
-  </table>
 </body>
 
 </html>

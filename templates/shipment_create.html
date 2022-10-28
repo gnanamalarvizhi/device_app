@@ -8,11 +8,34 @@
 <body>
     <h2>Create Shipment</h2>
     <form method="post" action="/shipments">
-         <input type="text" placeholder="Shipment Name" id="shipment_name" name="shipment_name"><br>
-         <input type="text" placeholder="Container number" id="container_no" name="container_no"><br>
-         <input type="text" placeholder="Route Type" id="route_type" name="route_type"><br>
-         <input type="text" placeholder="Delivery Type" id="delivery_type" name="delivery_type"><br>
+         <input type="text" placeholder="Shipment Number" id="shipment_no" name="shipment_no" required autocomplete="off"><br>
+         <input type="text" placeholder="Container number" id="container_no" name="container_no" required autocomplete="off"><br>
+         <input type="text" placeholder="Shipment description" id="shipment_description" name="shipment_description" required autocomplete="off"><br>
+         <input type="text" placeholder="Phone Number" id="phone_no" name="phone_no" required autocomplete="off"><br>
+         <input type="text" placeholder="Delivery Number" id="delivery_no" name="delivery_no" required autocomplete="off"><br>
+         <input type="text" placeholder="NDC Number" id="ndc_no" name="ndc_no" required autocomplete="off"><br>
+         <input type="text" placeholder="Batch ID" id="batch_id" name="batch_id" required autocomplete="off"><br>
+         <input type="text" placeholder="Serial Number of Goods" id="goods_no" name="goods_no" required autocomplete="off"><br>
+         <label for="route_details">Route Details</label>
+        <select name="route_details" id="route_details">
+               <option value="route1">Route 1</option>
+             </select>
+         <br><br>
+         <label for="goods_type">Goods Type</label>
+        <select name="goods_type" id="goods_type">
+               <option value="goods_types">Goods</option>
+             </select>
+         <br><br>
+         <label for="device">Device</label>
+        <select name="device" id="device">
+               <option value="my_device">My device</option>
+             </select>
+         <br><br>
+         <label for="date">Date</label>
+         <input type="date" id="date" name="date" required autocomplete="off">
+
          <input type="submit" value="Create shipment">
+        <input type="reset" value="Cancel shipment">
     </form>
 
 </body>
