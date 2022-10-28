@@ -3,11 +3,48 @@
 
 <head>
     <title>Shipment Create</title>>
+    <script>
+        function validateForm() {
+            let regex = (/^[0-9]+$/);
+            let shipment_no = document.forms["shipmentForm"]["shipment_no"].value;
+            let container_no = document.forms["shipmentForm"]["container_no"].value;
+            let delivery_no = document.forms["shipmentForm"]["delivery_no"].value;
+            let ndc_no = document.forms["shipmentForm"]["ndc_no"].value;
+            let batch_id = document.forms["shipmentForm"]["batch_id"].value;
+            let goods_no = document.forms["shipmentForm"]["goods_no"].value;
+            let phone_no = document.forms["shipmentForm"]["phone_no"].value;
+
+            if (!regex.test(shipment_no)) {
+                document.getElementById("message").innerHTML = 'Shipment number must bean integer.';
+                return false;
+            } else if (!regex.test(container_no)) {
+                document.getElementById("message").innerHTML = 'Container number must bean integerr.';
+                return false;
+            } else if (!regex.test(delivery_no)) {
+                document.getElementById("message").innerHTML = 'Delivery number must bean integerr.';
+                return false;
+            } else if (!regex.test(ndc_no)) {
+                document.getElementById("message").innerHTML = 'NDC number must bean integerr.';
+                return false;
+            } else if (!regex.test(batch_id)) {
+                document.getElementById("message").innerHTML = 'Batch id must bean integerr.';
+                return false;
+            } else if (!regex.test(goods_no)) {
+                document.getElementById("message").innerHTML = 'Serial numberof goods  must bean integerr.';
+                return false;
+            } else if (!(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/).test(phone_no)) {
+                // Possible valid phone number https://www.google.com/search?q=regex+pattern+for+accept+only+numbers+js&rlz=1C1CHBF_enIN1026IN1026&oq=regex+pattern+for+accept+only+numbers+js&aqs=chrome..69i57j0i22i30j0i390l3.14923j0j7&sourceid=chrome&ie=UTF-8
+                document.getElementById("message").innerHTML = 'Provide a valid phone number.';
+                return false;
+            }
+        }
+    </script>
 </head>
 
 <body>
     <h2>Create Shipment</h2>
-    <form method="post" action="/shipments">
+    <p id="message"></p>
+    <form name="shipmentForm" method="post" action="/shipments" onsubmit="return validateForm()">
          <input type="text" placeholder="Shipment Number" id="shipment_no" name="shipment_no" required
             autocomplete="off"><br>
          <input type="text" placeholder="Container number" id="container_no" name="container_no" required
