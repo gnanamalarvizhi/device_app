@@ -21,10 +21,13 @@ def index(request: Request):
 @device_app.get('/user/signin')
 def signin_users(request: Request):
     return templates.TemplateResponse("signin.html", {"request": request})
-
 @device_app.get('/dashboard')
 def dashboard(request: Request):
-        return templates.TemplateResponse("dashboard.html", {"request": request, 'shipments': get_all_shipments()})
+        return templates.TemplateResponse("dashboard.html", {"request": request})
+
+@device_app.get('/devices')
+def devices(request: Request):
+        return templates.TemplateResponse("device.html", {"request": request, 'devices': get_all_devices()})
 
 @device_app.get('/shipment/create')
 def shipment_create(request: Request):
@@ -48,9 +51,9 @@ def create_shipments(shipment_no: int= Form(), container_no: int= Form(), shipme
     db.shipments.insert_one(shipment_data)
     return dashboard(shipment_data )
 
-def get_all_shipments():
-    shiptments = db.shipments.find()
-    return shiptments
+def get_all_devices():
+    devices= db.devices.find()
+    return devices
 
 @device_app.post("/signin")
 def check_user_exists(request: Request, email: str = Form(), password: str = Form(),):
