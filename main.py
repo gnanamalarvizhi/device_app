@@ -6,12 +6,13 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+import os
 
 device_app= FastAPI()
 device_app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
-client = pymongo.MongoClient("mongodb+srv://device_user:device_password@cluster0.zjihjqh.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient(os.getenv('MONGO_ATLAS_URL'))
 db = client.device_info
 
 @device_app.get("/", response_class=HTMLResponse)

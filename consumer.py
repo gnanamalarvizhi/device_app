@@ -1,11 +1,12 @@
 from confluent_kafka import Consumer
 import pymongo
 import json 
+import os
 
 ################
 
 c=Consumer({'bootstrap.servers':'localhost:9092','group.id':'python-consumer','auto.offset.reset':'earliest'})
-client = pymongo.MongoClient("mongodb+srv://device_user:device_password@cluster0.zjihjqh.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient(os.getenv('MONGO_ATLAS_URL'))
 db = client.device_info
 print('Available topics to consume: ', c.list_topics().topics)
 
