@@ -1,5 +1,11 @@
-version: '3'
+version: '3.9'
 services:
+  web:
+    build: .
+    ports:
+        - "5000:5000"
+    environment:
+      MONGO_ATLAS_URL: mongodb+srv://device_user:device_password@cluster0.zjihjqh.mongodb.net/?retryWrites=true&w=majority
   zookeeper:
     image: confluentinc/cp-zookeeper:7.0.1
     container_name: zookeeper
@@ -8,7 +14,6 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-
   broker:
     image: confluentinc/cp-kafka:7.0.1
     container_name: broker
@@ -28,4 +33,34 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_JMX_PORT: 9101
-      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_JMX_HOSTNAME: 0.0.0.0
+  socket:
+    build:
+      context: ./.
+      dockerfile: socket.Dockerfile
+    ports:
+        - "12345:12345"
+    environment:
+      SOCKET_SERVER_PORT: 12345
+  producer:
+    build:
+      context: ./.
+      dockerfile: producer.Dockerfile
+    depends_on:
+      - socket
+      - broker
+    environment:
+      SOCKET_SERVER_HOST: socket
+      SOCKET_SERVER_PORT: 12345
+      BOOTSTRAP_SERVER: 'broker:29092'
+      TOPIC_NAME: device_data
+  consumer:
+    build:
+      context: ./.
+      dockerfile: consumer.Dockerfile
+    depends_on:
+      - broker
+    environment:
+      BOOTSTRAP_SERVER: 'broker:29092'
+      TOPIC_NAME: device_data
+      MONGO_ATLAS_URL: mongodb+srv://device_user:device_password@cluster0.zjihjqh.mongodb.net/?retryWrites=true&w=majority
