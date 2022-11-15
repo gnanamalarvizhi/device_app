@@ -1,12 +1,14 @@
 from confluent_kafka import Producer
+from dotenv import load_dotenv, find_dotenv
 import socket    
 import time    
+import os
 import json 
+
+load_dotenv(find_dotenv())
 s = socket.socket() 
-HOST = "127.0.0.1"
-PORT = 12345               
-s.connect((HOST, PORT))
-p=Producer({'bootstrap.servers':'localhost:9092'})
+s.connect((os.getenv('SOCKET_SERVER_HOST'), int(os.getenv('SOCKET_SERVER_PORT'))))
+p=Producer({'bootstrap.servers':os.getenv('BOOTSTRAP_SERVER')})
 
 while True:
 	try:
@@ -16,8 +18,8 @@ while True:
 		
 		for i in d:
 			result=json.dumps(i)
-			p.produce('test_event',result.encode('utf-8'))
-			#print(result)
+			p.produce(os.getenv('TOPIC_NAME'),result.encode('utf-8'))
+#			#print(result)
 	except Exception as e:
 		print(e)
 s.close() 

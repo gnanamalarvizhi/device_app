@@ -1,11 +1,12 @@
 import socket
 import json
-import requests
-from random import randint
 import time
+from dotenv import load_dotenv, find_dotenv
+import os
+load_dotenv(find_dotenv())
 s = socket.socket()
 print("Socket Created")
-s.bind(('',12345))
+s.bind(('',int(os.getenv('SOCKET_SERVER_PORT'))))
 s.listen(3)
 print("waiting for connections")
 c, addr = s.accept()
@@ -27,7 +28,7 @@ while True:
     try:
         print("connected with", addr)
         userdata = (json.dumps(data)+"\n").encode('utf-8')
-        print(userdata)
+#        print(userdata)
         c.send(userdata)
         time.sleep(100)
     except Exception as e:

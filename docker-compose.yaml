@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   web:
-    build: .
+    image: malarg/device_app:v1
     ports:
         - "5000:5000"
     environment:
@@ -35,17 +35,13 @@ services:
       KAFKA_JMX_PORT: 9101
       KAFKA_JMX_HOSTNAME: 0.0.0.0
   socket:
-    build:
-      context: ./.
-      dockerfile: socket.Dockerfile
+    image: malarg/socket:v1
     ports:
         - "12345:12345"
     environment:
       SOCKET_SERVER_PORT: 12345
   producer:
-    build:
-      context: ./.
-      dockerfile: producer.Dockerfile
+    image: malarg/producer:v1
     depends_on:
       - socket
       - broker
@@ -55,9 +51,7 @@ services:
       BOOTSTRAP_SERVER: 'broker:29092'
       TOPIC_NAME: device_data
   consumer:
-    build:
-      context: ./.
-      dockerfile: consumer.Dockerfile
+    image: malarg/consumer:v1
     depends_on:
       - broker
     environment:
