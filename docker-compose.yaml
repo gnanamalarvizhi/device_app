@@ -3,7 +3,7 @@ services:
   web:
     image: malarg/device_app:v1
     ports:
-        - "5000:5000"
+        - "80:5000"
     environment:
       MONGO_ATLAS_URL: mongodb+srv://device_user:device_password@cluster0.zjihjqh.mongodb.net/?retryWrites=true&w=majority
   zookeeper:
